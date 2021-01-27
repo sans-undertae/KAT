@@ -15,7 +15,10 @@ function module:LineBetweenPoints(PointA, PointB)
 		Part.CFrame = CFrame.new(PointA:lerp(PointB, 0.5), PointB)
 		Part.Size = Vector3.new(0.5,0.5,(PointA - PointB).magnitude - 2.5)
 		Part.Anchored = true
+		Part.Massless = true
+		Part.CanCollide = false
 		Part.Parent = workspace
+
 		return Part
 	else
 		error("Both classes must match and be a Vector of any sort!")
