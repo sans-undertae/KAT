@@ -25,14 +25,16 @@ function module:Raycast(PointA, PointB)
 	if (typeof(PointA) == "CFrame" or typeof(PointA) == "Vector3") then
 		if typeof(PointA) == "CFrame" then
 			PointA = PointA.Position
-		end
+        end
+        local Filter = raycastParams.FilterDescendantsInstances
 		for _,v in pairs(game.Players:GetPlayers()) do
-			if v ~= game.Players.LocalPlayer and v.Character then
-				table.insert(raycastParams.FilterDescendantsInstances, v.Character)
+            if v ~= game.Players.LocalPlayer and v.Character then
+				table.insert(Filter, v.Character)
 			end
-		end
+        end
+        raycastParams.FilterDescendantsInstances = Filter
 		local Result = workspace:Raycast(PointA, (PointB.Position - PointA).unit * 2000, raycastParams)
-		raycastParams.FilterDescendantsInstances = {workspace.MapMain, workspace.Spawn, workspace.Lobby}
+        raycastParams.FilterDescendantsInstances = {workspace.MapMain, workspace.Spawn, workspace.Lobby}
 		return Result or {}
 	else
 		error("Both classes must match and be a Vector of any sort!")
@@ -40,8 +42,8 @@ function module:Raycast(PointA, PointB)
 end
 
 function module:Shoot(Target, Offset)
-	game.Players.LocalPlayer.Character.Revolver.ClientEvent:FireServer("WeaponFired", {game.Players.LocalPlayer.Character.Head.Position + Offset,Target.Head.Position,{["hitOffset"] = CFrame.new(),["fireOffset"] = CFrame.new(),},1})
-	game:GetService("ReplicatedStorage").GameEvents.Gameplay.DamageRequest:FireServer({["attackID"] = 1,["IsHeadshot"] = true,["WeaponSkin"] = "BruhTime",["TargetCharacter"] = Target,["DamageType"] = "Knife",["Damage"] = 100})
+	game.Players.LocalPlayer.Character.Revolver.ClientEvent:FireServer("WeaponFired", {game.Players.LocalPlayer.Character.Head.Position + Offset,Target.Position,{["hitOffset"] = CFrame.new(),["fireOffset"] = CFrame.new(),},1})
+	game:GetService("ReplicatedStorage").GameEvents.Gameplay.DamageRequest:FireServer({["attackID"] = 1,["IsHeadshot"] = true,["WeaponSkin"] = "BruhTime",["TargetCharacter"] = Target.Parent,["DamageType"] = "Knife",["Damage"] = 100})
 end
 
 return module
