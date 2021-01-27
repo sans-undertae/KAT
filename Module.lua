@@ -44,7 +44,7 @@ end
 function module:Shoot(Target, Offset)
 	game.Players.LocalPlayer.Character.Revolver.ClientEvent:FireServer("WeaponFired", {game.Players.LocalPlayer.Character.Head.Position + Offset,Target.Position,{["hitOffset"] = CFrame.new(),["fireOffset"] = CFrame.new(),},1})
 	game:GetService("ReplicatedStorage").GameEvents.Gameplay.DamageRequest:FireServer({["attackID"] = 1,["IsHeadshot"] = true,["WeaponSkin"] = "BruhTime",["TargetCharacter"] = Target.Parent,["DamageType"] = "Knife",["Damage"] = 100})
-	debug.getupvalue(loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Upbolt/Hydroxide/revision/ohaux.lua"))().searchClosure(workspace.AccountUsernameHere.Revolver.RevolverServer.DefaultWeaponLogic, "trigger", 1), 1)["LoadedAmmo"] = 2
+	debug.getupvalue(loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Upbolt/Hydroxide/revision/ohaux.lua"))().searchClosure(game.Players.LocalPlayer.Character.Revolver.RevolverServer.DefaultWeaponLogic, "trigger", 1), 1)["LoadedAmmo"] = 2
 end
 
 return module
